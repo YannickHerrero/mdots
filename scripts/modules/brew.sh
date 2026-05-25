@@ -13,20 +13,26 @@ install_brew() {
         return 0
     fi
 
-    # Homebrew
-    if ! command -v brew &> /dev/null; then
-        echo "Installing Homebrew..."
-        NONINTERACTIVE=1 /bin/bash -c \
-            "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    else
-        echo "Homebrew already installed"
-    fi
-
-    # Make brew available for the rest of this install session
+    # Source brew shellenv first — brew may already be installed but missing
+    # from PATH (e.g. after wiping .zprofile / .zshrc for a clean install).
     if [[ -x /opt/homebrew/bin/brew ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
     elif [[ -x /usr/local/bin/brew ]]; then
         eval "$(/usr/local/bin/brew shellenv)"
+    fi
+
+    if ! command -v brew &> /dev/null; then
+        echo "Installing Homebrew..."
+        NONINTERACTIVE=1 /bin/bash -c \
+            "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        # Newly-installed brew needs its shellenv loaded too
+        if [[ -x /opt/homebrew/bin/brew ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        elif [[ -x /usr/local/bin/brew ]]; then
+            eval "$(/usr/local/bin/brew shellenv)"
+        fi
+    else
+        echo "Homebrew already installed"
     fi
 
     brew update
