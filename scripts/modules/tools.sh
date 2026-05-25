@@ -71,17 +71,13 @@ install_tools() {
     fi
 
     # Install shell-color-scripts (provides `colorscript`, used by snacks.dashboard).
-    # The Makefile installs to /usr/local; on Apple Silicon /usr/local exists
-    # but isn't in the default PATH, so we also symlink into the brew prefix
-    # so colorscript is on PATH out of the box.
+    # Override PREFIX so the binary lands in the brew prefix — the Makefile's
+    # default /usr/local/bin doesn't exist on Apple Silicon Macs.
     if ! command -v colorscript &> /dev/null; then
         echo "Installing colorscript..."
         tmpdir="$(mktemp -d)"
         git clone --depth=1 https://gitlab.com/dwt1/shell-color-scripts.git "$tmpdir"
-        sudo make -C "$tmpdir" install
-        if [[ -x /usr/local/bin/colorscript && -d "$(brew --prefix)/bin" ]]; then
-            ln -sf /usr/local/bin/colorscript "$(brew --prefix)/bin/colorscript"
-        fi
+        sudo make -C "$tmpdir" PREFIX="$(brew --prefix)" install
         rm -rf "$tmpdir"
     else
         echo "colorscript already installed"
