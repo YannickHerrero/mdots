@@ -102,6 +102,10 @@ alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 alt-s = 'workspace next'
 alt-d = 'workspace-back-and-forth'
 
+# Launchers
+alt-enter = 'exec-and-forget open -na WezTerm'
+alt-b = 'exec-and-forget open -na Firefox --args --new-window'
+
 [mode.resize.binding]
 h = 'resize width -50'
 j = 'resize height -50'
