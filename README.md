@@ -33,6 +33,9 @@ Install specific components:
 ./install.sh node       # Node.js LTS + bun + pnpm + npm packages
 ./install.sh rust       # Rust toolchain (rustup)
 ./install.sh tools      # zoxide, delta, lazygit, gh, macchina, ...
+./install.sh aerospace  # AeroSpace tiling window manager (mirrors glazewm bindings)
+./install.sh wezterm    # WezTerm terminal emulator + JetBrainsMono Nerd Font
+./install.sh firefox    # Firefox + userChrome.css UI customization + Cozette font
 ./install.sh claude     # Claude Code global config + skills
 ./install.sh ssh        # Optional GitHub SSH key generation
 ./install.sh git        # Git configuration
@@ -70,6 +73,14 @@ on higher-risk commands, and block a few dangerous patterns outright.
 | zsh | brew | Shell with zinit plugin manager (newer than macOS's stock zsh) |
 | oh-my-posh | curl | Prompt that inherits terminal colors |
 | tmux | brew | Terminal multiplexer with TPM |
+| wezterm | brew cask | GPU-accelerated terminal; config ported from windot (`~/.wezterm.lua`) |
+
+#### Desktop / WM
+
+| Tool | Installation | Description |
+|------|--------------|-------------|
+| AeroSpace | brew cask | i3-like tiling window manager. Config at `~/.config/aerospace/aerospace.toml` mirrors the [glazewm](https://github.com/YannickHerrero/windot) bindings exactly (Alt+hjkl focus, Alt+Shift+hjkl move, Alt+1..9 workspaces, etc). Needs Accessibility permission on first launch. |
+| Firefox | brew cask | Browser with `userChrome.css` UI debloating (auto-hide tabs/navbar, compact controls). Profile customization is auto-deployed by `./install.sh firefox` once Firefox has created its default profile. |
 
 #### Editor
 
