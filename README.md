@@ -18,10 +18,7 @@ Requires `sudo` access (used by the `zsh` module to register brew's zsh in
 Command Line Tools (auto-installed by the `brew` module on first run), and
 an internet connection.
 
-The `install.sh` requires bash 4+. macOS ships bash 3.2, so the `brew`
-module installs a newer bash early — on a fresh machine, run the `brew`
-module first via `/bin/bash ./install.sh brew`, then re-run subsequent
-modules with the newly-installed bash.
+Runs on macOS's stock `/bin/bash` (3.2) — no `brew install bash` prereq.
 
 ## Modular Installation
 
