@@ -59,8 +59,10 @@ alt-shift-t = 'layout floating tiling'
 alt-f = 'fullscreen'
 alt-q = 'close'
 
-# Toggle tiling direction (glazewm: toggle-tiling-direction)
-alt-r = 'split opposite'
+# Toggle container orientation (glazewm: toggle-tiling-direction).
+# `split` is incompatible with enable-normalization-flatten-containers;
+# `layout horizontal vertical` toggles tile orientation directly instead.
+alt-r = 'layout horizontal vertical'
 
 # Reload, pause, redraw
 alt-shift-r = 'reload-config'
