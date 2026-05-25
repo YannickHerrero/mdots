@@ -17,7 +17,12 @@ install_firefox() {
     fi
 
     if ! brew list --cask firefox &> /dev/null; then
-        brew install --cask firefox
+        if [[ -d /Applications/Firefox.app ]]; then
+            # Existing manual install — let brew take over instead of failing.
+            brew install --cask --adopt firefox
+        else
+            brew install --cask firefox
+        fi
     else
         echo "Firefox already installed"
     fi

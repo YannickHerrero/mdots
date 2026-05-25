@@ -14,7 +14,12 @@ install_wezterm() {
     fi
 
     if ! brew list --cask wezterm &> /dev/null; then
-        brew install --cask wezterm
+        if [[ -d /Applications/WezTerm.app ]]; then
+            # Existing manual install — let brew take over instead of failing.
+            brew install --cask --adopt wezterm
+        else
+            brew install --cask wezterm
+        fi
     else
         echo "WezTerm already installed"
     fi
