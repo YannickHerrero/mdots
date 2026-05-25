@@ -35,7 +35,9 @@ install_brew() {
         echo "Homebrew already installed"
     fi
 
-    brew update
+    # Don't abort the install if a stale/removed tap makes `brew update`
+    # exit non-zero — `brew install` works fine off the current formula cache.
+    brew update || echo "brew update reported issues (continuing)"
 
     brew install \
         bash \
