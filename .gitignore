@@ -1,0 +1,11 @@
+# Generated theme files (created by set-theme)
+config/nvim/lua/theme-colors.lua
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
