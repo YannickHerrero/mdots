@@ -7,13 +7,6 @@
 
 set -euo pipefail
 
-if (( BASH_VERSINFO[0] < 4 )); then
-    echo "Error: bash 4+ required (found ${BASH_VERSION})." >&2
-    echo "macOS ships bash 3.2 which lacks associative arrays." >&2
-    echo "Install a newer bash first: brew install bash" >&2
-    exit 1
-fi
-
 if [[ "$(uname -s)" != "Darwin" ]]; then
     echo "Error: this installer targets macOS (detected $(uname -s))." >&2
     echo "Use the Debian-targeted dotfiles repo for Linux." >&2
@@ -69,24 +62,28 @@ print_notices() {
     done
 }
 
-# Available modules
-declare -A MODULES=(
-    ["brew"]="Homebrew and system dependencies (curl, ripgrep, fzf, bat, eza, ...)"
-    ["zsh"]="Zsh shell and oh-my-posh"
-    ["tmux"]="Tmux terminal multiplexer"
-    ["nvim"]="Neovim (latest stable via brew)"
-    ["mise"]="mise runtime manager"
-    ["node"]="Node.js LTS, bun, pnpm, npm packages"
-    ["rust"]="Rust toolchain via rustup"
-    ["tools"]="Additional tools (Claude Code, zoxide, delta, lazygit, gh, macchina)"
-    ["claude"]="Claude Code global configuration and skills"
-    ["ssh"]="SSH key generation"
-    ["git"]="Git configuration"
-    ["dotfiles"]="Copy all dotfiles to home directory"
-)
-
-# Order for full install
+# Available modules, in install order. Descriptions live in module_desc()
+# below — kept as a case statement (not an associative array) so install.sh
+# runs on macOS's stock bash 3.2 without a `brew install bash` prereq.
 INSTALL_ORDER=(brew ssh zsh tmux nvim mise node rust tools claude git dotfiles)
+
+module_desc() {
+    case "$1" in
+        brew)     echo "Homebrew and system dependencies (curl, ripgrep, fzf, bat, eza, ...)" ;;
+        ssh)      echo "SSH key generation" ;;
+        zsh)      echo "Zsh shell and oh-my-posh" ;;
+        tmux)     echo "Tmux terminal multiplexer" ;;
+        nvim)     echo "Neovim (latest stable via brew)" ;;
+        mise)     echo "mise runtime manager" ;;
+        node)     echo "Node.js LTS, bun, pnpm, npm packages" ;;
+        rust)     echo "Rust toolchain via rustup" ;;
+        tools)    echo "Additional tools (Claude Code, zoxide, delta, lazygit, gh, macchina)" ;;
+        claude)   echo "Claude Code global configuration and skills" ;;
+        git)      echo "Git configuration" ;;
+        dotfiles) echo "Copy all dotfiles to home directory" ;;
+        *)        return 1 ;;
+    esac
+}
 
 show_help() {
     echo "Dotfiles Bootstrap Script (macOS)"
@@ -94,8 +91,8 @@ show_help() {
     echo "Usage: ./install.sh [module...] | all"
     echo ""
     echo "Modules:"
-    for module in "${!MODULES[@]}"; do
-        printf "  %-12s %s\n" "$module" "${MODULES[$module]}"
+    for module in "${INSTALL_ORDER[@]}"; do
+        printf "  %-12s %s\n" "$module" "$(module_desc "$module")"
     done
     echo ""
     echo "Examples:"
@@ -115,7 +112,7 @@ run_module() {
         return 1
     fi
 
-    print_header "Installing: ${MODULES[$module]}"
+    print_header "Installing: $(module_desc "$module")"
     source "$script"
     print_success "Module '$module' completed"
 }
@@ -124,7 +121,7 @@ install_all() {
     print_header "Full Installation"
     echo "This will install:"
     for module in "${INSTALL_ORDER[@]}"; do
-        echo "  - ${MODULES[$module]}"
+        echo "  - $(module_desc "$module")"
     done
     echo ""
 
@@ -168,7 +165,7 @@ main() {
 
     # Install specific modules
     for module in "$@"; do
-        if [[ -z "${MODULES[$module]}" ]]; then
+        if ! module_desc "$module" >/dev/null 2>&1; then
             print_error "Unknown module: $module"
             echo "Run './install.sh --help' for available modules"
             exit 1
