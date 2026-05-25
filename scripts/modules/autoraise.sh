@@ -32,7 +32,8 @@ install_autoraise() {
     echo "AutoRaise binary installed: $bin"
 
     # LaunchAgent: starts AutoRaise at login and keeps it alive.
-    # -delay 1 = 100ms before raising (snappy without being twitchy).
+    # -pollMillis 20 (the documented minimum) + -delay 1 = ~20ms response,
+    # i.e. effectively instant focus-follows-mouse.
     mkdir -p "$(dirname "$plist")"
     cat > "$plist" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -44,6 +45,8 @@ install_autoraise() {
     <key>ProgramArguments</key>
     <array>
         <string>$bin</string>
+        <string>-pollMillis</string>
+        <string>20</string>
         <string>-delay</string>
         <string>1</string>
     </array>
