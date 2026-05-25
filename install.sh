@@ -65,23 +65,26 @@ print_notices() {
 # Available modules, in install order. Descriptions live in module_desc()
 # below — kept as a case statement (not an associative array) so install.sh
 # runs on macOS's stock bash 3.2 without a `brew install bash` prereq.
-INSTALL_ORDER=(brew ssh zsh tmux nvim mise node rust tools claude git dotfiles)
+INSTALL_ORDER=(brew ssh zsh tmux nvim mise node rust tools aerospace wezterm firefox claude git dotfiles)
 
 module_desc() {
     case "$1" in
-        brew)     echo "Homebrew and system dependencies (curl, ripgrep, fzf, bat, eza, ...)" ;;
-        ssh)      echo "SSH key generation" ;;
-        zsh)      echo "Zsh shell and oh-my-posh" ;;
-        tmux)     echo "Tmux terminal multiplexer" ;;
-        nvim)     echo "Neovim (latest stable via brew)" ;;
-        mise)     echo "mise runtime manager" ;;
-        node)     echo "Node.js LTS, bun, pnpm, npm packages" ;;
-        rust)     echo "Rust toolchain via rustup" ;;
-        tools)    echo "Additional tools (Claude Code, zoxide, delta, lazygit, gh, macchina)" ;;
-        claude)   echo "Claude Code global configuration and skills" ;;
-        git)      echo "Git configuration" ;;
-        dotfiles) echo "Copy all dotfiles to home directory" ;;
-        *)        return 1 ;;
+        brew)      echo "Homebrew and system dependencies (curl, ripgrep, fzf, bat, eza, ...)" ;;
+        ssh)       echo "SSH key generation" ;;
+        zsh)       echo "Zsh shell and oh-my-posh" ;;
+        tmux)      echo "Tmux terminal multiplexer" ;;
+        nvim)      echo "Neovim (latest stable via brew)" ;;
+        mise)      echo "mise runtime manager" ;;
+        node)      echo "Node.js LTS, bun, pnpm, npm packages" ;;
+        rust)      echo "Rust toolchain via rustup" ;;
+        tools)     echo "Additional tools (Claude Code, zoxide, delta, lazygit, gh, macchina)" ;;
+        aerospace) echo "AeroSpace tiling window manager (mirrors glazewm bindings)" ;;
+        wezterm)   echo "WezTerm terminal emulator + JetBrainsMono Nerd Font" ;;
+        firefox)   echo "Firefox + userChrome.css UI customization + Cozette font" ;;
+        claude)    echo "Claude Code global configuration and skills" ;;
+        git)       echo "Git configuration" ;;
+        dotfiles)  echo "Copy all dotfiles to home directory" ;;
+        *)         return 1 ;;
     esac
 }
 
