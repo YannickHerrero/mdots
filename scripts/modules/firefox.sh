@@ -34,16 +34,36 @@ install_firefox() {
         echo "Cozette font already installed"
     fi
 
-    # Locate the default profile. Firefox creates this on first launch.
-    local profiles_dir="$HOME/Library/Application Support/Firefox/Profiles"
+    # Locate the active profile. Firefox stores this in installs.ini under the
+    # Default= key for the current install hash — that's the profile actually
+    # used at launch, regardless of how many *.default-release dirs exist.
+    # Falls back to profiles.ini's [Install*] section, then to a name-based
+    # heuristic if neither file has the info.
+    local ff_support="$HOME/Library/Application Support/Firefox"
+    local profiles_dir="$ff_support/Profiles"
+    local relative=""
+
+    if [[ -f "$ff_support/installs.ini" ]]; then
+        relative=$(awk -F= '/^Default=/ {print $2; exit}' "$ff_support/installs.ini" | tr -d '\r')
+    fi
+    if [[ -z "$relative" && -f "$ff_support/profiles.ini" ]]; then
+        relative=$(awk -F= '
+            /^\[Install/ {in_install=1; next}
+            /^\[/        {in_install=0}
+            in_install && /^Default=/ {print $2; exit}
+        ' "$ff_support/profiles.ini" | tr -d '\r')
+    fi
+
     local profile_dir=""
-    if [[ -d "$profiles_dir" ]]; then
+    if [[ -n "$relative" ]]; then
+        profile_dir="$ff_support/$relative"
+    elif [[ -d "$profiles_dir" ]]; then
         profile_dir=$(find "$profiles_dir" -maxdepth 1 -type d \
             \( -name '*.default-release' -o -name '*.default' \) | head -1)
     fi
 
-    if [[ -z "$profile_dir" ]]; then
-        add_notice "Firefox: no profile yet. Launch Firefox once to create one, then run './install.sh firefox' again to deploy userChrome.css."
+    if [[ -z "$profile_dir" || ! -d "$profile_dir" ]]; then
+        add_notice "Firefox: no active profile yet. Launch Firefox once to create one, then run './install.sh firefox' again to deploy userChrome.css."
         return 0
     fi
 
