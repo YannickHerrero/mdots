@@ -104,7 +104,10 @@ alt-d = 'workspace-back-and-forth'
 
 # Launchers
 alt-enter = 'exec-and-forget open -na WezTerm'
-alt-b = 'exec-and-forget open -na Firefox --args --new-window'
+# Firefox is single-instance: `open -na` activates the existing process, which
+# yanks focus to whatever workspace already has a Firefox window. Capture the
+# starting workspace and shove the new window back after it spawns.
+alt-b = 'exec-and-forget ws=$(aerospace list-workspaces --focused); open -na Firefox --args --new-window; sleep 0.8; aerospace move-node-to-workspace "$ws"; aerospace workspace "$ws"'
 
 [mode.resize.binding]
 h = 'resize width -50'
