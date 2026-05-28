@@ -1,9 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 # Install GlazeWM (cross-platform tiling WM) and deploy its config.
-# Mirrors aerospace.sh — GlazeWM has its own tray-menu auto-start toggle
-# ("Run on system startup"), so no LaunchAgent is needed. Coexists with
-# AeroSpace at install time; do NOT run both simultaneously.
+# GlazeWM has its own tray-menu auto-start toggle ("Run on system startup"),
+# so no LaunchAgent is needed.
 
 _MODULE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_DIR="$(dirname "$(dirname "$_MODULE_DIR")")"

@@ -65,7 +65,7 @@ print_notices() {
 # Available modules, in install order. Descriptions live in module_desc()
 # below — kept as a case statement (not an associative array) so install.sh
 # runs on macOS's stock bash 3.2 without a `brew install bash` prereq.
-INSTALL_ORDER=(brew ssh zsh tmux nvim mise node rust tools aerospace glazewm autoraise wezterm firefox claude git dotfiles)
+INSTALL_ORDER=(brew ssh zsh tmux nvim mise node rust tools glazewm autoraise wezterm firefox claude git dotfiles)
 
 module_desc() {
     case "$1" in
@@ -78,8 +78,7 @@ module_desc() {
         node)      echo "Node.js LTS, bun, pnpm, npm packages" ;;
         rust)      echo "Rust toolchain via rustup" ;;
         tools)     echo "Additional tools (Claude Code, zoxide, delta, lazygit, gh, macchina)" ;;
-        aerospace) echo "AeroSpace tiling window manager (mirrors glazewm bindings)" ;;
-        glazewm)   echo "GlazeWM tiling window manager (cross-platform sibling of aerospace)" ;;
+        glazewm)   echo "GlazeWM tiling window manager" ;;
         autoraise) echo "AutoRaise focus-follows-mouse daemon (LaunchAgent)" ;;
         wezterm)   echo "WezTerm terminal emulator + JetBrainsMono Nerd Font" ;;
         firefox)   echo "Firefox + userChrome.css UI customization + Cozette font" ;;

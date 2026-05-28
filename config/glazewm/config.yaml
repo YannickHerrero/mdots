@@ -2,8 +2,7 @@
 # Mirrors ~/dev/windot/glzr/glazewm/config.yaml so the desktop UX is identical
 # across Windows + macOS. Windows-only sections (startup_commands wiring wbar
 # and kanata, window_effects exclusive to Windows 11, Win32 window_class
-# matchers) are stripped. Launcher bindings (alt+enter, alt+b) mirror the
-# additions made to aerospace.toml.
+# matchers) are stripped.
 
 general:
   # Commands to run after the WM config is reloaded.
@@ -19,7 +18,6 @@ general:
 
   cursor_jump:
     enabled: true
-    # 'window_focus' matches aerospace.toml's `move-mouse window-lazy-center`.
     trigger: 'window_focus'
 
   # 'cloak' and 'hide' are Windows-only on the current macOS build.
