@@ -34,7 +34,6 @@ Install specific components:
 ./install.sh rust       # Rust toolchain (rustup)
 ./install.sh tools      # zoxide, delta, lazygit, gh, macchina, ...
 ./install.sh glazewm    # GlazeWM tiling window manager (cross-platform with the windot config)
-./install.sh autoraise  # AutoRaise focus-follows-mouse daemon (LaunchAgent)
 ./install.sh wezterm    # WezTerm terminal emulator + JetBrainsMono Nerd Font
 ./install.sh firefox    # Firefox + userChrome.css UI customization + Cozette font
 ./install.sh claude     # Claude Code global config + skills
@@ -80,8 +79,7 @@ on higher-risk commands, and block a few dangerous patterns outright.
 
 | Tool | Installation | Description |
 |------|--------------|-------------|
-| GlazeWM | brew cask | Cross-platform tiling WM (same engine driving the windot config on Windows). Config at `~/.glzr/glazewm/config.yaml` ported from windot with Windows-only effects stripped. Auto-start toggled via the tray menu's "Run on system startup". `focus_follows_cursor` is built-in, so AutoRaise becomes redundant when GlazeWM is the active WM. |
-| AutoRaise | source build | Focus-follows-mouse daemon (AeroSpace doesn't do this natively). Installed as a LaunchAgent so it starts at login. Also needs Accessibility permission. |
+| GlazeWM | brew cask | Cross-platform tiling WM (same engine driving the windot config on Windows). Config at `~/.glzr/glazewm/config.yaml` ported from windot with Windows-only effects stripped. Auto-start toggled via the tray menu's "Run on system startup". `focus_follows_cursor` is built-in, so no separate focus-follows-mouse daemon is needed. |
 | Firefox | brew cask | Browser with `userChrome.css` UI debloating (auto-hide tabs/navbar, compact controls). Profile customization is auto-deployed by `./install.sh firefox` once Firefox has created its default profile. |
 
 #### Editor
