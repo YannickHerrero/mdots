@@ -1,0 +1,42 @@
+[bar]
+position = "top"
+height = 28
+
+[font]
+family = "Default"
+size = 12.0
+
+theme = "Paper"
+
+# Layout tuned for notch MacBooks: the centre region is intentionally
+# empty so nothing renders behind the notch. Right is rendered
+# right-to-left, so the array below is reversed from the visual order —
+# visually it reads:  time  date  battery
+[layout]
+left   = ["workspaces"]
+center = []
+right  = ["battery", "date", "time"]
+
+[widgets.workspaces]
+type = "glazewm"
+show_empty = false
+
+[widgets.time]
+type = "clock"
+# %-I:%M %p  →  "2:30 PM"
+format = "%-I:%M %p"
+tick_seconds = 1
+
+[widgets.date]
+type = "clock"
+# %a %-d %b  →  "Mon 3 Jan"
+format = "%a %-d %b"
+tick_seconds = 60
+
+[widgets.battery]
+type = "sysinfo"
+metric = "battery"
+icon = ""
+charging_icon = "󰂄"
+format = "{value:>3.0}%"
+interval_seconds = 10

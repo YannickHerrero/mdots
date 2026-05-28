@@ -34,6 +34,7 @@ Install specific components:
 ./install.sh rust       # Rust toolchain (rustup)
 ./install.sh tools      # zoxide, delta, lazygit, gh, macchina, ...
 ./install.sh glazewm    # GlazeWM tiling window manager (cross-platform with the windot config)
+./install.sh wbar       # wbar status bar (GlazeWM companion, cargo build from source)
 ./install.sh wezterm    # WezTerm terminal emulator + JetBrainsMono Nerd Font
 ./install.sh firefox    # Firefox + userChrome.css UI customization + Cozette font
 ./install.sh claude     # Claude Code global config + skills
@@ -80,6 +81,7 @@ on higher-risk commands, and block a few dangerous patterns outright.
 | Tool | Installation | Description |
 |------|--------------|-------------|
 | GlazeWM | brew cask | Cross-platform tiling WM (same engine driving the windot config on Windows). Config at `~/.glzr/glazewm/config.yaml` ported from windot with Windows-only effects stripped. Auto-start toggled via the tray menu's "Run on system startup". `focus_follows_cursor` is built-in, so no separate focus-follows-mouse daemon is needed. |
+| wbar | cargo (git) | Minimalist status bar designed to pair with GlazeWM — workspaces on the left, clock + battery on the right. Config at `~/Library/Application Support/wbar/config.toml`. Built from source via `cargo install --git`; requires the `rust` module. Launch with `wbar`; runs as a menu-bar accessory (no Dock tile). |
 | Firefox | brew cask | Browser with `userChrome.css` UI debloating (auto-hide tabs/navbar, compact controls). Profile customization is auto-deployed by `./install.sh firefox` once Firefox has created its default profile. |
 
 #### Editor
