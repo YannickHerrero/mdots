@@ -1,0 +1,189 @@
+# GlazeWM — macOS port.
+# Mirrors ~/dev/windot/glzr/glazewm/config.yaml so the desktop UX is identical
+# across Windows + macOS. Windows-only sections (startup_commands wiring wbar
+# and kanata, window_effects exclusive to Windows 11, Win32 window_class
+# matchers) are stripped. Launcher bindings (alt+enter, alt+b) mirror the
+# additions made to aerospace.toml.
+
+general:
+  # Commands to run after the WM config is reloaded.
+  config_reload_commands: []
+
+  # Whether to automatically focus windows underneath the cursor. Cross-platform.
+  # On macOS this is expected to replace AutoRaise.
+  focus_follows_cursor: true
+
+  # Whether to switch back and forth between the previously focused
+  # workspace when focusing the current workspace.
+  toggle_workspace_on_refocus: false
+
+  cursor_jump:
+    enabled: true
+    # 'window_focus' matches aerospace.toml's `move-mouse window-lazy-center`.
+    trigger: 'window_focus'
+
+  # 'cloak' and 'hide' are Windows-only on the current macOS build.
+  hide_method: 'place_in_corner'
+
+gaps:
+  scale_with_dpi: true
+  inner_gap: '12px'
+  outer_gap:
+    top: '12px'
+    right: '12px'
+    bottom: '12px'
+    left: '12px'
+
+window_behavior:
+  initial_state: 'tiling'
+  state_defaults:
+    floating:
+      centered: true
+      shown_on_top: true
+    fullscreen:
+      maximized: false
+      shown_on_top: false
+
+workspaces:
+  - name: '1'
+  - name: '2'
+  - name: '3'
+  - name: '4'
+  - name: '5'
+  - name: '6'
+  - name: '7'
+  - name: '8'
+  - name: '9'
+
+window_rules:
+  # Float picture-in-picture popups for major browsers. macOS exposes process
+  # names rather than Win32 window classes, so match by process instead.
+  - commands: ['set-floating']
+    match:
+      - window_process: { equals: 'firefox' }
+        window_title: { regex: '[Pp]icture.in.[Pp]icture' }
+      - window_process: { equals: 'Google Chrome' }
+        window_title: { regex: '[Pp]icture.in.[Pp]icture' }
+
+binding_modes:
+  - name: 'resize'
+    keybindings:
+      - commands: ['resize --width -2%']
+        bindings: ['h', 'left']
+      - commands: ['resize --width +2%']
+        bindings: ['l', 'right']
+      - commands: ['resize --height +2%']
+        bindings: ['k', 'up']
+      - commands: ['resize --height -2%']
+        bindings: ['j', 'down']
+      - commands: ['wm-disable-binding-mode --name resize']
+        bindings: ['escape', 'enter']
+
+keybindings:
+  # Focus
+  - commands: ['focus --direction left']
+    bindings: ['alt+h', 'alt+left']
+  - commands: ['focus --direction right']
+    bindings: ['alt+l', 'alt+right']
+  - commands: ['focus --direction up']
+    bindings: ['alt+k', 'alt+up']
+  - commands: ['focus --direction down']
+    bindings: ['alt+j', 'alt+down']
+
+  # Move
+  - commands: ['move --direction left']
+    bindings: ['alt+shift+h', 'alt+shift+left']
+  - commands: ['move --direction right']
+    bindings: ['alt+shift+l', 'alt+shift+right']
+  - commands: ['move --direction up']
+    bindings: ['alt+shift+k', 'alt+shift+up']
+  - commands: ['move --direction down']
+    bindings: ['alt+shift+j', 'alt+shift+down']
+
+  # Resize (matches the 2% step used on Windows / glazewm)
+  - commands: ['resize --width -2%']
+    bindings: ['alt+u']
+  - commands: ['resize --width +2%']
+    bindings: ['alt+p']
+  - commands: ['resize --height +2%']
+    bindings: ['alt+o']
+  - commands: ['resize --height -2%']
+    bindings: ['alt+i']
+
+  # Resize binding mode
+  - commands: ['wm-enable-binding-mode --name resize']
+    bindings: ['alt+v']
+
+  # Pause / toggle tiling direction
+  - commands: ['wm-toggle-pause']
+    bindings: ['alt+shift+p']
+  - commands: ['toggle-tiling-direction']
+    bindings: ['alt+r']
+
+  # Layout / window state
+  - commands: ['toggle-floating --centered']
+    bindings: ['alt+shift+t']
+  - commands: ['toggle-tiling']
+    bindings: ['alt+t']
+  - commands: ['toggle-fullscreen']
+    bindings: ['alt+f']
+  - commands: ['close']
+    bindings: ['alt+q']
+
+  # Reload / redraw
+  - commands: ['wm-reload-config']
+    bindings: ['alt+shift+r']
+  - commands: ['wm-redraw']
+    bindings: ['alt+shift+w']
+
+  # Cycle workspaces
+  - commands: ['focus --next-active-workspace']
+    bindings: ['alt+s']
+  - commands: ['focus --recent-workspace']
+    bindings: ['alt+d']
+
+  # Workspace focus
+  - commands: ['focus --workspace 1']
+    bindings: ['alt+1']
+  - commands: ['focus --workspace 2']
+    bindings: ['alt+2']
+  - commands: ['focus --workspace 3']
+    bindings: ['alt+3']
+  - commands: ['focus --workspace 4']
+    bindings: ['alt+4']
+  - commands: ['focus --workspace 5']
+    bindings: ['alt+5']
+  - commands: ['focus --workspace 6']
+    bindings: ['alt+6']
+  - commands: ['focus --workspace 7']
+    bindings: ['alt+7']
+  - commands: ['focus --workspace 8']
+    bindings: ['alt+8']
+  - commands: ['focus --workspace 9']
+    bindings: ['alt+9']
+
+  # Move focused window to workspace and follow
+  - commands: ['move --workspace 1', 'focus --workspace 1']
+    bindings: ['alt+shift+1']
+  - commands: ['move --workspace 2', 'focus --workspace 2']
+    bindings: ['alt+shift+2']
+  - commands: ['move --workspace 3', 'focus --workspace 3']
+    bindings: ['alt+shift+3']
+  - commands: ['move --workspace 4', 'focus --workspace 4']
+    bindings: ['alt+shift+4']
+  - commands: ['move --workspace 5', 'focus --workspace 5']
+    bindings: ['alt+shift+5']
+  - commands: ['move --workspace 6', 'focus --workspace 6']
+    bindings: ['alt+shift+6']
+  - commands: ['move --workspace 7', 'focus --workspace 7']
+    bindings: ['alt+shift+7']
+  - commands: ['move --workspace 8', 'focus --workspace 8']
+    bindings: ['alt+shift+8']
+  - commands: ['move --workspace 9', 'focus --workspace 9']
+    bindings: ['alt+shift+9']
+
+  # Launchers (mirror aerospace.toml)
+  - commands: ['shell-exec open -na WezTerm']
+    bindings: ['alt+enter']
+  - commands: ['shell-exec open -na Firefox --args --new-window']
+    bindings: ['alt+b']
