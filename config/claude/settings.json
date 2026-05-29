@@ -95,9 +95,7 @@
       "Bash(bun install *)",
       "Bash(ssh *)",
       "Bash(scp *)",
-      "Bash(rsync *)"
-    ],
-    "deny": [
+      "Bash(rsync *)",
       "Bash(rm -rf *)",
       "Bash(rm -fr *)",
       "Bash(curl *)",
@@ -108,6 +106,7 @@
       "Read(./*.pem)",
       "Read(./*.key)"
     ],
+    "deny": [],
     "defaultMode": "acceptEdits"
   },
   "autoUpdatesChannel": "stable",
